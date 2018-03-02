@@ -2,6 +2,31 @@
 
 This project creates a set of icons for use with [openHAB 2](https://www.openhab.org) from the [Material Design Icons](https://www.materialdesignicons.com) (MDI).
 
+## Use
+
+Type `python3 mdi.py --help` from the command line for more information.
+
+The program uses as many defaults as possible, but any of those can be overwritten with a command line argument
+
+```bash
+$ python3 mdi.py --help
+usage: mdi.py [-h] [-f FILE] [-i INPUT-PATH] [-o OUTPUT-PATH] [-n] [-q] [-e]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -f FILE, --file FILE  get input/output mapping from FILE (default:
+                        ./mdi.yaml)
+  -i INPUT-PATH, --input-path INPUT-PATH
+                        read icons from INPUT-PATH (default:
+                        ./download/MaterialDesign-master/icons/svg)
+  -o OUTPUT-PATH, --output-path OUTPUT-PATH
+                        write icons to OUTPUT-PATH (default:
+                        ./iconset)
+  -n, --dry-run         parse yaml file for errors (default: False)
+  -q, --quiet           don't print status messages to stdout (default: True)
+  -e, --empty           empty output folder first (default: False)
+```
+
 ## Pre-requisites
 
 Install the required libraries:
@@ -9,7 +34,8 @@ Install the required libraries:
 pip3 install -r requirements.txt
 ```
 
-The script expects the source icons in a sub folder `download` of the script location. [Download the repo as a ZIP](https://github.com/Templarian/MaterialDesign/archive/master.zip) and extract it there first.
+The script expects the source icons in the input folder. 
+[Download the repo as a ZIP](https://github.com/Templarian/MaterialDesign/archive/master.zip) and extract it there first.
 
 ## Design
 
@@ -44,6 +70,8 @@ Gradients, for example for the dimmed `light` states, can be computed with tools
 
 ## Different sets
 
+You can create your personal set of icons. This should preferably cover at least the classic icons, but can be extend to your personal preferences.
+
 ### Minimal set
 
 Any icon set should at least contain an icon for [each channel category](https://www.eclipse.org/smarthome/documentation/development/bindings/thing-definition.html#channel-categories).
@@ -52,16 +80,14 @@ A minimal set is included in the project as `minimal.yaml`.
 ### Classic
 
 openHAB currently includes an extended 'classic' set of icons.
-The classic set `classic.yaml` includes an alternative for any of these icons.
+The classic set `classic.yaml` includes an alternative for any of these icons, including the minimal set.
+When you install the classic set, none of the original icons should be visible.
 
-### Extra
+### Extended (default)
 
-In addition to the classic set, some additional useful icons have been mapped as `extra.yaml`.
-Mainly as an example how to extend the classic set.
-
-### Full
-
-The full set of mapped icons. This is the combination of both the classic as the extra set.
+An extended set of mapped icons. 
+This includes the classic as well as a lot of extra usable icons.
+The set is available as `mdi.yaml`
 
 ## Configuration
 
