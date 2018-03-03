@@ -6,6 +6,7 @@ from os.path import expanduser
 from shutil import copyfile
 import fileinput
 import ruamel.yaml as yaml
+from xml.etree import ElementTree
 
 def svg_copy(src, dst):
     try:
@@ -14,11 +15,10 @@ def svg_copy(src, dst):
         print(err)
 
 def svg_replace_fill(file, search_color, replace_color):
-    search = 'fill="' + search_color + '"'
-    replace = 'fill="' + replace_color + '"'
-    with fileinput.FileInput(file, inplace=True) as file:
-        for line in file:
-            print(line.replace(search, replace), end='')
+    svg = ElementTree.parse(file)
+    for node in svg.findall("//*[@fill='%s']" % search_color):
+        node.set("fill", replace_color)
+    svg.write(file)
 
 def is_valid_file(parser, arg):
     """
