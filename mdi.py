@@ -20,7 +20,23 @@ def svg_replace_fill(file, search_color, replace_color):
     for node in svg.findall("//*[@fill='%s']" % search_color):
     	node.set("fill", replace_color)
     svg.write(file)
-    
+	
+def name2color(colorname):
+    color =	{
+		"green": "#32CD32",
+		"orange": "#FF8C00",
+		"yellow": "#FFD700",
+		"red": "#DC143C",
+		"blue": "#0000CD",
+		"skintype1": "#FFDBB6",
+		"skintype2": "#FFDBB6",
+		"skintype3": "#ECBA8D",
+		"skintype4": "#CF8B5D",
+		"skintype5": "#AD5C2B",
+		"skintype6": "#614235",
+		"black":"#000000",
+		"white":"#ffffff"}
+    return str(color.get(colorname,colorname))
 	
 def svg_add_fill(file, color):
     svg = ElementTree.parse(file)
@@ -164,14 +180,23 @@ def main(argv):
 
                         # modify color of destination file
                         if 'color' in destname:
+                            hexcolor=name2color(destname['color'])
+								
                             if args.dryrun:
                                 print('Color of file ' + dstfile + ' would have been replaced with ' + destname['color'])
                             else:
                                 if args.verbose:
-                                    print('Replace icon color with ' + destname['color'])
-                                svg_replace_fill(dstfile, '#000000', destname['color'])
-                                svg_add_fill(dstfile,destname['color'])
-
+                                    print('Replace icon color with ' + hexcolor)
+                                svg_replace_fill(dstfile, '#000000', hexcolor)
+                                svg_add_fill(dstfile,hexcolor)
+                        else:
+							# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							# set default color!!!!!!!!!!!!!!!!!
+							# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            hexcolor=name2color('white')
+							# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            svg_replace_fill(dstfile, '#000000', hexcolor)
+                            svg_add_fill(dstfile,hexcolor)
                         # create aliases
                         if 'alias' in destname:
                             for alias in destname['alias']:
