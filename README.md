@@ -42,7 +42,7 @@ The script expects the source icons in the input folder.
 The icon set is built around default colors.
 A good overview of available colors can be found [at W3 Schools](https://www.w3schools.com/colors/colors_groups.asp).
 
-The icon colors used are:
+The icon colors used are. you can change them in the mdi.py script global
 
 - green: "#32CD32" (lime green)
 - orange: "#FF8C00" (dark orange)
@@ -67,6 +67,8 @@ Icon colors follow the dynamic state or value when possible. For example:
 - Contact OPEN = red
 
 Gradients, for example for the dimmed `light` states, can be computed with tools like the [color gradient table generator](http://www.herethere.net/~samson/php/color_gradient/) or [RGB Color Gradient Maker](http://www.perbang.dk/rgbgradient/).
+
+The main color is defined in mdi.py line 196 -> change that if you want black icons.
 
 ## Different sets
 
@@ -101,12 +103,8 @@ The color should be a valid HTML RGB code (e.g. `#FF00FF`).
 To build the iconset:
 
 1. Run `python3 mdi.py` from the command line to create the .svg icons in a subfolder `iconset`.
-2. Run the `_icon_convert.sh` script to create the corresponding .png files.
+2. Run the `icon_convert.sh` script to create the corresponding .png files.
 
 ## Using the iconset
 
 That's easy. Just copy all files from the `iconset` folder to your openHAB configuration in the folder `icons/classic`.
-
-## TODO
-
-- Create intermediate folders for output. For now these need to be created manually before the script is run.
