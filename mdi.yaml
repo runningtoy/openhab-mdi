@@ -206,7 +206,7 @@ mdi:
       color: "#DC143C"
       alias:
       - time-off
-  - nest-thermostat:
+  - thermostat:
     - dest: heating
     - dest: heating-on
       color: "#32CD32"
@@ -223,7 +223,12 @@ mdi:
   - magnify:
     - dest: zoom
   - flash:
-    - dest: energy
+    - dest: energyf
+      alias: energy
+    - dest: energy-on
+      color: "#32CD32"
+    - dest: energy-off
+      color: "#DC143C"      
   - alert:
     - dest: error
   - fan:
@@ -380,7 +385,7 @@ mdi:
     - dest: soundvolume
   - volume-off:
     - dest: soundvolume_mute
-  - toggle-switch-on:
+  - toggle-switch:
     - dest: wallswitch
     - dest: wallswitch-on
       color: "#32CD32"
@@ -472,6 +477,9 @@ mdi:
     - dest: suitcase
   - white-balance-sunny:
     - dest: solarplant
+      alias: getlight2
+  - moon-full:
+    - dest: getdark2
   - cup-water:
     - dest: softener
   - sofa:
@@ -724,3 +732,52 @@ mdi:
       - parents_6_4
       - parents_6_5
       - parents_6_6
+  - pause: 
+    - dest: pause
+  - skip-previous: 
+    - dest: skip-previous
+  - skip-next: 
+    - dest: skip-next     
+  - skip-next: 
+      - dest: skip-next   
+  - play: 
+      - dest: play
+  - coffee: 
+      - dest: coffee           
+        alias:
+        - coffee-off           
+  - coffee-outline: 
+      - dest: coffee-off
+  - airplay:
+      - dest: airplay
+  - sleep:
+      - dest: snooze
+        alias: sleep
+  - checkerboard:
+      - dest: awtrix
+      - dest: awtrix-off
+        color: "#DC143C"
+      - dest: awtrix-on
+        color: "#32CD32"
+  - blur:
+      - dest: awtrix2
+      - dest: awtrix2-off
+        color: "#DC143C"
+      - dest: awtrix2-on
+        color: "#32CD32"
+  - theme-light-dark:
+      - dest: getdark
+        alias:
+        - getlight
+  - grill:
+      - dest: grill
+  - history:
+      - dest: history
+  - do-not-disturb:
+      - dest: do-not-disturb
+        alias:
+        - do-not-disturb-on
+  - do-not-disturb-off:
+      - dest: do-not-disturb-off
+  - message-alert-outline:
+      - dest: about

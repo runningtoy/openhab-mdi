@@ -2,6 +2,7 @@
 
 import sys
 import os
+import re
 from os.path import expanduser
 from shutil import copyfile
 import fileinput
@@ -17,9 +18,27 @@ def svg_copy(src, dst):
 def svg_replace_fill(file, search_color, replace_color):
     svg = ElementTree.parse(file)
     for node in svg.findall("//*[@fill='%s']" % search_color):
-        node.set("fill", replace_color)
+    	node.set("fill", replace_color)
     svg.write(file)
-
+    
+	
+def svg_add_fill(file, color):
+    svg = ElementTree.parse(file)
+    doc = svg.getroot()
+    ns = re.match(r'{.*}', doc.tag).group(0)
+    for node in doc.findall(f"{ns}path"):
+        node.set('style', "fill: "+color+";")
+        #ElementTree.dump(node)
+    svg.write(file)
+    
+	
+def createFolder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print ('Error: Creating directory. ' +  directory)
+		
 def is_valid_file(parser, arg):
     """
     Check if arg is a valid file that already exists on the file system.
@@ -80,7 +99,6 @@ def get_parser():
                         help="read icons from INPUT-PATH")
     parser.add_argument("-o", "--output-path",
                         dest="output_path",
-                        type=lambda x: is_valid_file(parser, x),
                         default=pwd+"/iconset",
                         metavar="OUTPUT-PATH",
                         help="write icons to OUTPUT-PATH")
@@ -104,8 +122,11 @@ def get_parser():
 def main(argv):
 
     args = get_parser().parse_args()
+	
 
     args.output_path = args.output_path + "/" + os.path.splitext(os.path.basename(args.filename))[0]
+	
+    createFolder(args.output_path)
 
     if (args.empty):
         # remove all files in output folder
@@ -124,6 +145,7 @@ def main(argv):
         try:
             doc = yaml.safe_load(f)
             f.close()
+			
             for mdi in doc['mdi']:
                 for sourcename in mdi:
                     for destname in mdi[sourcename]:
@@ -148,6 +170,7 @@ def main(argv):
                                 if args.verbose:
                                     print('Replace icon color with ' + destname['color'])
                                 svg_replace_fill(dstfile, '#000000', destname['color'])
+                                svg_add_fill(dstfile,destname['color'])
 
                         # create aliases
                         if 'alias' in destname:
